@@ -34,25 +34,9 @@ test('Private data, conflicts, conversations and video rejection',async()=>{
   assert.equal(detectImage(Buffer.from('not a photo')),null);
 });
 
-test('Package requests require activation and deleted accounts can register again',async()=>{
-  const prior=process.env.ADMIN_PASSWORD;process.env.ADMIN_PASSWORD='testing-admin-secret';
-  try{
-    const clientAgent=request.agent(app),administrator=request.agent(app),body={name:'Pessoa Teste',email:'pessoa-nova@example.com',phone:'919111222',password:'palavra-segura',plan:'monthly',packageMessage:'Quero aderir.'};
-    const created=await clientAgent.post('/api/auth/register').set('Origin',origin).send(body);assert.equal(created.status,201);assert.equal(created.body.user.subscriptionStatus,'pending');const id=created.body.user.id;
-    assert.equal((await clientAgent.get('/api/me/data').set('X-HTY-Account',id)).status,403);
-    assert.equal((await clientAgent.delete(`/api/admin/users/${id}`).set('Origin',origin)).status,401);
-    assert.equal((await administrator.post('/api/admin/login').set('Origin',origin).send({email:'admin1@gmail.com',password:'testing-admin-secret'})).status,200);
-    assert.equal((await administrator.post(`/api/admin/users/${id}/package`).set('Origin',origin).send({action:'monthly_paid'})).status,200);
-    assert.equal((await clientAgent.get('/api/me/data').set('X-HTY-Account',id)).status,200);
-    assert.equal((await clientAgent.put('/api/me/data/salary').set('Origin',origin).set('X-HTY-Account',id).send({value:'1760',expectedVersion:0})).status,200);
-    assert.equal((await clientAgent.put('/api/me/data/manual-hours').set('Origin',origin).set('X-HTY-Account',id).send({value:JSON.stringify({'2026-11-17':450}),expectedVersion:0})).status,200);
-    assert.equal((await clientAgent.get(`/api/admin/users/${id}/report`)).status,401);
-    const report=await administrator.get(`/api/admin/users/${id}/report`);assert.equal(report.status,200);assert.equal(report.body.report.days[0].minutes,450);assert.equal(report.body.report.days[0].baseEstimate,75);
-    assert.equal((await administrator.delete(`/api/admin/users/${id}`).set('Origin',origin)).status,200);
-    assert.equal(await client.db('test').collection('user_data').countDocuments({userId:id}),0);
-    assert.equal((await clientAgent.get('/api/me/data').set('X-HTY-Account',id)).status,401);
-    const retry=await request.agent(app).post('/api/auth/register').set('Origin',origin).send({...body,plan:'trial'});assert.equal(retry.status,201);assert.notEqual(retry.body.user.id,id);
-  }finally{if(prior===undefined)delete process.env.ADMIN_PASSWORD;else process.env.ADMIN_PASSWORD=prior;}
+test('Novos colaboradores entram sem pacote e com acesso ilimitado',async()=>{
+ const agent=request.agent(app);const r=await agent.post('/api/auth/register').set('Origin',origin).send({name:'Pessoa Teste',email:'casacheia@example.com',phone:'919111222',password:'palavra-segura'});assert.equal(r.status,201);assert.equal(r.body.user.subscription.plan,'unlimited');assert.equal(r.body.user.subscriptionStatus,'active');assert.equal((await agent.get('/api/me/data').set('X-HTY-Account',r.body.user.id)).status,200);
+
 });
 
 

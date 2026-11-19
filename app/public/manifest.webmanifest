@@ -1,13 +1,13 @@
 {
   "id": "/",
-  "name": "HourToYou — Gestão de horas",
-  "short_name": "HourToYou",
+  "name": "Casa Cheia — Gestão de horas",
+  "short_name": "Casa Cheia",
   "description": "As tuas horas e horários, sempre contigo.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#071c35",
-  "theme_color": "#071c35",
+  "background_color": "#171363",
+  "theme_color": "#171363",
   "icons": [
     {"src":"/icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
     {"src":"/icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
