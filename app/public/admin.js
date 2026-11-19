@@ -23,5 +23,6 @@
   $('export-one').addEventListener('click',async()=>{try{if(current)await makePdf([current]);}catch(e){$('detail-message').textContent=e.message;}});
   $('export-all').addEventListener('click',async()=>{try{const button=$('export-all');button.disabled=true;const reports=[];try{for(const user of users)reports.push(await api(`/api/admin/users/${encodeURIComponent(user._id)}/report`));await makePdf(reports);}finally{button.disabled=false;}}catch(e){$('message').textContent=e.message;}});
   $('logout').addEventListener('click',async()=>{try{await api('/api/admin/logout',{method:'POST'});}finally{location.assign('/');}});
+  fetch('/api/demo-status',{cache:'no-store'}).then(r=>r.json()).then(x=>{if(x.demo){const note=document.createElement('div');note.className='demo-notice';note.textContent='Modo de demonstração: dados temporários; não uses dados reais.';document.body.append(note);}}).catch(()=>{});
   load();setInterval(load,10000);
 })();

@@ -4,3 +4,5 @@
 
 /* Identidade Casa Cheia */
 :root{color:#211b61;background:#f8f7ef}.brand,.eyebrow,.top h1 span{color:#c8232c}.hero{background:linear-gradient(120deg,#17135f,#332b87)}.hero .eyebrow{color:#ffe900}.hero button{background:#ffe900;color:#18115c}button{background:#211a72}.clock{border:2px solid #ffe900;box-shadow:inset 0 0 0 12px #ffe90015}.card{border-color:#e8e5d5}.stats>div{border-top:4px solid #ffe900}[hidden]{display:none!important}
+
+.demo-notice{position:fixed;z-index:9999;bottom:0;left:0;right:0;padding:8px;background:#ffe600;color:#171363;text-align:center;font-weight:800;font-size:12px}
