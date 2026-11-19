@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071c35">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="HourToYou">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <meta name="description" content="HourToYou: o teu tempo, sempre contigo.">
+  <title>HourToYou — O teu tempo, sempre contigo</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="punch.css">
+  <link rel="stylesheet" href="worktime.css">
+  <link rel="stylesheet" href="reports.css">
+  <link rel="stylesheet" href="messages.css">
+  <link rel="stylesheet" href="pwa.css">
+  <script src="vendor/jszip.min.js" defer></script>
+  <script src="report-logo.js" defer></script>
+  <script src="reports.js" defer></script>
+  <script src="profile.js" defer></script>
+  <script src="messages.js" defer></script>
+  <script src="worktime.js" defer></script>
+  <script src="punch.js" defer></script>
+  <script src="dashboard.js" defer></script>
+  <script src="server-sync.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="pwa.js" defer></script>
+</head>
+<body>
+  <main class="page" id="auth-page">
+    <div class="backdrop" aria-hidden="true">
+      <div class="photo photo-driver"></div>
+      <div class="photo photo-road"></div>
+      <div class="photo photo-journey"></div>
+      <div class="photo-tint"></div>
+      <span class="orb orb-one"></span><span class="orb orb-two"></span><span class="horizon"></span>
+    </div>
+    <div class="layout">
+      <header class="brand-row"><a class="brand" href="./" aria-label="HourToYou, início"><img src="logo.svg" alt=""><span>hour<span>to</span>you<small>O TEU TEMPO, CONTIGO</small></span></a><span class="island-tag"><i></i> FEITO NOS AÇORES</span></header>
+      <div class="content">
+        <section class="intro" aria-labelledby="intro-title">
+          <div class="eyebrow"><span></span> PARA QUEM ESTÁ SEMPRE EM MOVIMENTO</div>
+          <h1 id="intro-title">O teu tempo<br>tem <em>valor.</em></h1>
+          <p>Um lugar para acompanhares as tuas horas e teres uma visão mais clara do teu trabalho.</p>
+          <div class="intro-bottom"><div class="line"></div><span>INSPIRADO NAS NOSSAS ILHAS</span><div class="wave-mark" aria-hidden="true">∿ ∿ ∿</div></div>
+        </section>
+        <section class="auth-card" aria-label="Acesso à conta">
+          <div id="auth-view">
+            <div class="card-top"><div class="icon-box"><img src="logo.svg" alt=""></div><div class="card-brand">hour<span>to</span>you</div><span class="card-label">A TUA ÁREA PESSOAL</span></div>
+            <h2 id="form-title">Bem-vindo de volta<span>.</span></h2>
+            <p class="card-sub" id="form-subtitle">Entra na tua conta para continuares.</p>
+            <div class="tabs" role="tablist" aria-label="Acesso ou registo"><button type="button" role="tab" id="login-tab" aria-selected="true" aria-controls="form-panel">Entrar</button><button type="button" role="tab" id="register-tab" aria-selected="false" aria-controls="form-panel">Criar conta</button></div>
+            <div id="form-panel" role="tabpanel" aria-labelledby="login-tab">
+              <form id="auth-form">
+                <div id="register-fields" hidden>
+                  <label for="name">Nome completo</label><div class="input-wrap"><span aria-hidden="true">♙</span><input id="name" name="name" autocomplete="name" placeholder="O teu nome completo"></div>
+                  <label for="phone">Telemóvel</label><div class="input-wrap"><span aria-hidden="true">⌁</span><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="O teu número de telemóvel"></div>
+                </div>
+                <label for="email">Email</label><div class="input-wrap"><span aria-hidden="true">✉</span><input id="email" name="email" type="email" autocomplete="email" placeholder="O teu endereço de email" required></div>
+                <label for="password">Palavra-passe</label><div class="input-wrap"><span aria-hidden="true">♧</span><input id="password" name="password" type="password" autocomplete="current-password" placeholder="A tua palavra-passe" required><button class="show-password" type="button" aria-label="Mostrar palavra-passe" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
+                <p id="password-hint" class="hint" hidden>Mínimo de 8 caracteres.</p>
+                <p id="message" class="message" role="alert" hidden></p>
+                <button class="primary" type="submit"><span id="submit-label">Entrar na minha conta</span><span aria-hidden="true">↗</span></button>
+              </form>
+            </div>
+            <p class="switch-copy" id="switch-copy">Ainda não tens conta? <button type="button" id="switch-mode">Criar conta</button></p>
+            <div class="install-block"><div class="install-heading"><span></span> LEVA A HOURTOYOU CONTIGO <span></span></div><p>Instala no teu telemóvel para um acesso mais rápido.</p><div class="install-buttons"><button type="button" id="install-android"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8 5.5 5.5M17 8l1.5-2.5M5 15a7 7 0 0 1 14 0H5ZM6 17v2m12-2v2M3 12v5m18-5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="11.5" r=".7" fill="currentColor"/><circle cx="15" cy="11.5" r=".7" fill="currentColor"/></svg><span><small>INSTALAR PARA</small><strong>Android</strong></span></button><button type="button" id="install-ios"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.8 12.5c0-2 1.7-3 1.8-3.1-.9-1.3-2.4-1.5-2.9-1.5-1.2-.1-2.4.7-3 .7s-1.6-.7-2.6-.7c-1.4 0-2.7.8-3.4 2-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.5 2.1 2.6 2.1s1.4-.6 2.7-.6 1.6.6 2.7.6 1.9-1 2.6-2c.8-1.2 1.2-2.3 1.2-2.4-.1 0-2.8-1.1-2.8-3.7ZM14.9 6.7c.6-.8 1.1-1.8 1-2.7-.9 0-2 .6-2.6 1.3-.6.7-1.2 1.7-1 2.6 1 0 2-.5 2.6-1.2Z"/></svg><span><small>INSTALAR NO</small><strong>iPhone</strong></span></button></div><p id="install-instructions" class="install-instructions" role="status" hidden></p></div>
+          </div>
+        </section>
+      </div>
+      <footer class="auth-footer"><span>© 2026 AZORESTOYOU · TODOS OS DIREITOS RESERVADOS</span></footer>
+    </div>
+  </main>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 21v-7h6v7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-punch" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><circle cx="12" cy="11" r="4"/><path d="M12 9v2l1.5 1M8 18h8"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 15h2"/><path d="M7 6V4h10v2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4m10-4v4M3 10h18M8 14h2m4 0h2m-8 4h2"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-3.5-.7L4 21l1.4-4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8M8 14h5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10m4 0h2M4 17h2m4 0h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+  </svg>
+  <div id="app-shell" class="app-shell" hidden>
+    <header class="app-header"><div class="app-header-inner"><div class="app-brand"><img src="logo.svg" alt=""><span>hour<span>to</span>you<small>O TEU TEMPO, CONTIGO</small></span></div><button type="button" class="avatar" id="avatar-button" aria-label="Abrir perfil"><svg><use href="#i-user"/></svg></button></div></header>
+    <main class="app-main">
+      <section id="home-screen" class="screen">
+        <div class="greeting-row"><div><p class="overline">O TEU ESPAÇO PESSOAL <span>✦</span></p><h1>Olá, <span data-user-first></span><span class="teal-dot">.</span></h1><p class="greeting-sub">Tudo o que importa, num só lugar.</p></div><div class="date-pill"><span id="date-day"></span><small id="date-month"></small></div></div>
+        <div class="clock-widget" aria-label="Data e hora em Ponta Delgada">
+          <div class="clock-top"><span><i></i> PONTA DELGADA, AÇORES</span><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+          <div class="clock-reading"><time id="live-time">--:--</time><span id="live-seconds">--</span></div><button type="button" class="clock-avatar" id="clock-avatar" aria-label="Abrir perfil e fotografia"><img alt="" hidden><svg aria-hidden="true"><use href="#i-user"/></svg></button>
+          <p class="clock-date" id="live-date">A carregar a data…</p>
+          <div class="clock-bottom"><div><span class="clock-label">RELÓGIO DE PONTO</span><strong id="today-status">Sem registos hoje</strong></div><button type="button" data-route="punch" class="clock-action">Registar ponto <span aria-hidden="true">↗</span></button></div>
+        </div>
+        <div class="section-heading"><div><p class="overline">O TEU DIA A DIA</p><h2>Acesso rápido<span class="teal-dot">.</span></h2></div><button type="button" class="customize-link" data-open-customize><svg><use href="#i-sliders"/></svg> Personalizar</button></div>
+        <div class="quick-grid" id="quick-grid"></div><p class="empty-cards" id="empty-cards" hidden>Os cartões estão ocultos. Escolhe “Personalizar” para os mostrar.</p>
+        <div class="home-note"><div class="note-icon">✦</div><div><strong>Um passo de cada vez.</strong><p>Estamos a preparar este espaço para ti.</p></div></div>
+      </section>
+      <section id="punch-screen" class="screen punch-screen" hidden>
+        <button type="button" class="back-home" data-go-home>← &nbsp; Voltar ao início</button>
+        <p class="overline">O TEU DIA DE TRABALHO</p><h1>Relógio de ponto<span class="teal-dot">.</span></h1>
+        <p class="punch-intro">Regista cada momento do teu dia com a hora dos Açores.</p>
+        <div class="punch-now"><div><span>HORA ATUAL · PONTA DELGADA</span><strong id="punch-time">--:--:--</strong><small id="punch-date"></small></div><div class="punch-now-icon"><svg><use href="#i-punch"/></svg></div></div>
+        <div class="route-card"><div><p class="overline">PERCURSO ATUAL</p><p>Indica o percurso que outros condutores poderão consultar enquanto estiveres em serviço.</p></div><label for="current-route">Percurso</label><div class="route-controls"><input id="current-route" type="text" maxlength="120" placeholder="Ex.: Ponta Delgada – Lagoa"><button type="button" id="save-route">Guardar</button></div><p id="route-feedback" role="status"></p></div>
+        <div class="punch-heading"><div><p class="overline">MARCAR PONTO</p><h2>O que queres registar?</h2></div></div>
+        <div class="punch-actions"><button type="button" data-punch="entry"><span class="punch-action-icon">↗</span><span><strong>Entrada</strong><small>Início do trabalho</small></span></button><button type="button" data-punch="lunch"><span class="punch-action-icon">☕</span><span><strong>Saída para almoço</strong><small>Início do intervalo</small></span></button><button type="button" data-punch="return"><span class="punch-action-icon">↻</span><span><strong>Regresso</strong><small>Início da tarde</small></span></button><button type="button" data-punch="exit"><span class="punch-action-icon">↙</span><span><strong>Saída</strong><small>Fim do trabalho</small></span></button></div>
+        <p id="punch-feedback" class="punch-feedback" role="status" hidden></p>
+        <div class="history-heading"><div><p class="overline">A TUA ATIVIDADE</p><h2>Registos de ponto<span class="teal-dot">.</span></h2></div><button type="button" id="undo-punch" class="undo-punch" hidden>Anular último</button></div>
+        <div id="punch-history" class="punch-history"></div>
+        <p class="local-note">Guardado neste navegador e dispositivo.</p>
+      </section>
+      <section id="hours-screen" class="screen work-screen" hidden>
+        <button type="button" class="back-home" data-go-home>← &nbsp; Voltar ao início</button>
+        <p class="overline">O TEU TEMPO, COM CLAREZA</p><h1>Horas trabalhadas<span class="teal-dot">.</span></h1><p class="work-intro">Acompanha o ponto e regista as tuas horas extra.</p>
+        <div class="work-summary"><span>PERÍODOS INICIADOS NO MÊS SELECIONADO</span><strong id="worked-total">0h 00min</strong><small id="worked-note">Com base nas marcações de ponto completas.</small></div>
+        <p id="worked-warning" class="work-warning" hidden></p><div id="admin-example" class="admin-example" hidden><strong>Exemplo para o administrador · 6h</strong><span>09:00–12:00 e 13:00–16:00. É apenas uma demonstração.</span></div><button type="button" class="report-open" data-report-open>↓ &nbsp; Exportar relatório de horas</button>
+        <div class="work-heading"><div><p class="overline">OS TEUS REGISTOS</p><h2>Horas extra<span class="teal-dot">.</span></h2></div><label class="month-picker">Mês <input type="month" id="overtime-month"></label></div>
+        <div class="extra-summary"><div><span>VALOR DAS HORAS EXTRA</span><strong id="overtime-total">0,00 €</strong></div><button type="button" class="mini-button" id="open-extra">＋ Registar</button></div>
+        <p class="work-hint">Valor estimado conforme as horas e a forma de aplicação da percentagem escolhidas.</p><div id="overtime-list" class="work-list"></div>
+      </section>
+      <section id="calendar-screen" class="screen work-screen" hidden>
+        <button type="button" class="back-home" data-go-home>← &nbsp; Voltar ao início</button>
+        <p class="overline">A TUA ORGANIZAÇÃO</p><h1>Calendário<span class="teal-dot">.</span></h1><p class="work-intro">Seleciona um dia para indicar uma folga ou organizar o horário.</p>
+        <div class="calendar-tools"><div class="calendar-switch" role="group" aria-label="Mostrar no calendário"><button type="button" id="calendar-hours" aria-pressed="true">Horas</button><button type="button" id="calendar-values" aria-pressed="false">Valor</button></div><button type="button" class="customize-link" data-report-open>↓ &nbsp; Exportar</button></div><p class="calendar-metric-note">O indicador inclui o ponto e as horas manuais ou, se não existirem, as horas extra.</p><div class="calendar-card"><div class="calendar-top"><button type="button" id="cal-prev" aria-label="Mês anterior">‹</button><h2 id="calendar-month"></h2><button type="button" id="cal-next" aria-label="Mês seguinte">›</button></div><div class="calendar-weekdays" aria-hidden="true"><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span></div><div id="calendar-grid" class="calendar-grid"></div><div class="calendar-legend"><span><i class="legend-today"></i>Hoje</span><span><i class="legend-off"></i>Folga</span><span><i class="legend-shift"></i>Horário</span></div></div>
+        <div class="day-panel"><div class="day-panel-head"><div><p class="overline">DIA SELECIONADO</p><h2 id="selected-date"></h2></div><button type="button" id="day-off" class="day-off">Marcar folga</button></div><p id="day-off-label" class="day-off-label" hidden>☀ &nbsp; Dia marcado como folga</p><div id="report-day-summary"></div><button type="button" id="day-add-extra" class="outline-button day-add-extra">＋ Adicionar horas extra neste dia</button><div id="day-shifts" class="work-list"></div><p class="work-hint">As durações previstas não descontam pausas e podem diferir numa mudança de hora.</p><button type="button" id="open-import" class="outline-button">＋ Adicionar horário ou percurso</button></div>
+      </section>
+      <dialog id="plan-dialog" class="plan-dialog"><div class="plan-header"><p>HOURTOYOU</p><h2>Escolhe o teu pacote</h2><span>Seleciona como queres começar.</span></div><div class="plan-options"><label><input type="radio" name="registration-plan" value="trial" checked><span><strong>15 dias grátis</strong><small>Experimenta a aplicação sem pagamento.</small></span></label><label><input type="radio" name="registration-plan" value="monthly"><span><strong>Pacote completo · 5,99 €/mês</strong><small>Envia um pedido ao administrador. O pagamento é confirmado fora da aplicação e o acesso começa após aceitação.</small></span></label></div><label id="plan-message-label" hidden>Mensagem para o administrador<textarea id="plan-message" maxlength="2000" placeholder="Olá, gostaria de aderir ao pacote completo."></textarea></label><p id="plan-error" role="alert" hidden></p><div class="plan-actions"><button type="button" id="plan-cancel">Cancelar</button><button type="button" id="plan-continue">Continuar</button></div></dialog>
+      <dialog id="manual-hours-dialog" class="work-dialog"><form id="manual-hours-form"><h2>Registar horas em falta</h2><p id="manual-hours-date"></p><p class="work-hint">Estas horas são somadas às marcações existentes. Confirma que não estás a contar o mesmo período duas vezes.</p><label for="manual-hours-input">Total de horas neste registo</label><input id="manual-hours-input" inputmode="decimal" placeholder="Ex.: 7,5" required><p id="manual-hours-error" class="work-warning" role="alert" hidden></p><div><button type="button" id="manual-hours-cancel">Cancelar</button><button type="submit">Guardar horas</button><button type="button" id="manual-hours-remove" hidden>Eliminar registo manual</button></div></form></dialog>
+      <section id="messages-screen" class="screen messages-screen" hidden>
+        <div id="chat-offline" class="chat-empty" hidden>As mensagens precisam de ligação à internet. Os restantes dados continuam disponíveis neste dispositivo.</div><div id="chat-list-view"><button type="button" class="back-home" data-go-home>← &nbsp; Voltar ao início</button><div class="chat-title-row"><div><p class="overline">ENTRE CONDUTORES</p><h1>Mensagens<span class="teal-dot">.</span></h1><p class="work-intro">As tuas conversas num só lugar.</p></div><div class="chat-title-icon"><svg aria-hidden="true"><use href="#i-message"/></svg></div></div><div class="chat-local-note"><span>●</span> As conversas ficam entre os participantes. O estado mostra a última marcação e pode estar desatualizado.</div><label class="chat-search-label" for="chat-search">Pesquisar condutores</label><div class="chat-search"><span aria-hidden="true">⌕</span><input id="chat-search" type="search" placeholder="Pesquisar por nome" autocomplete="off"></div><p><a href="/pending.html?support=1">✉ Conversar com o administrador</a></p><div class="chat-list-heading"><h2>Condutores</h2><span id="chat-count"></span></div><div id="chat-list" class="chat-list"></div></div>
+        <div id="chat-conversation" hidden><button type="button" class="back-home chat-back" id="chat-back">← &nbsp; Todas as conversas</button><div class="conversation-head"><div id="conversation-avatar" class="chat-avatar"></div><div><p class="overline">CONVERSA COM</p><h1 id="conversation-name"></h1><p id="conversation-status"></p><small id="conversation-route"></small></div><button type="button" class="help-button" id="open-help">Pedir ajuda</button></div><div id="chat-history" class="chat-history" aria-live="polite"></div><p id="chat-feedback" class="chat-feedback" role="status" hidden></p><form id="chat-form" class="chat-composer"><label for="chat-photo" class="chat-attachment" aria-label="Enviar fotografia ou GIF">＋</label><input id="chat-photo" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><label class="visually-hidden" for="chat-text">Escrever mensagem</label><textarea id="chat-text" rows="1" maxlength="2000" placeholder="Escreve uma mensagem..."></textarea><button type="submit" class="chat-send" aria-label="Enviar mensagem">➤</button></form><p class="chat-attachment-note">Fotografias e GIFs · vídeos não são permitidos.</p></div>
+      </section>
+      <section id="detail-screen" class="screen detail-screen" hidden><button type="button" class="back-home" data-go-home>← &nbsp; Voltar ao início</button><div class="detail-icon" id="detail-icon"></div><p class="overline">A TUA ÁREA PESSOAL</p><h1 id="detail-title"></h1><p id="detail-copy"></p><div id="profile-area" class="profile-area" hidden><div class="profile-picture"><img alt="Fotografia do condutor" hidden><svg aria-hidden="true"><use href="#i-user"/></svg></div><strong id="profile-name"></strong><span>FOTOGRAFIA DE PERFIL</span><label for="profile-file" class="outline-button">Escolher fotografia</label><input id="profile-file" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp"><button type="button" id="profile-remove" class="profile-remove" hidden>Remover fotografia</button><p id="profile-feedback" role="status"></p><small>A fotografia fica apenas neste dispositivo.</small>
+          <div class="profile-divider"></div><div class="profile-data-heading"><p class="overline">OS TEUS DADOS</p><h2>Informação pessoal<span class="teal-dot">.</span></h2><p id="profile-sample-badge" class="profile-sample-badge" hidden>Dados fictícios · exemplo</p></div>
+          <div id="profile-details" class="profile-details"><dl><div><dt>Nome completo</dt><dd id="detail-full-name"></dd></div><div><dt>Telemóvel</dt><dd id="detail-phone"></dd></div><div><dt>Email de acesso</dt><dd id="detail-email"></dd></div><div><dt>N.º de colaborador</dt><dd id="detail-employee"></dd></div><div><dt>Função</dt><dd id="detail-role"></dd></div><div><dt>Localidade</dt><dd id="detail-location"></dd></div></dl><button type="button" id="profile-edit" class="profile-edit-button">Editar dados <span aria-hidden="true">↗</span></button></div>
+          <form id="profile-form" class="profile-form" hidden><label for="profile-full-name">Nome completo</label><input id="profile-full-name" type="text" autocomplete="name" maxlength="120" required><label for="profile-phone">Telemóvel</label><input id="profile-phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20"><label for="profile-email">Email de acesso</label><input id="profile-email" type="email" readonly><p class="profile-hint">O email é usado para entrar na conta e não pode ser alterado aqui.</p><label for="profile-employee">N.º de colaborador</label><input id="profile-employee" type="text" maxlength="40" placeholder="Opcional"><label for="profile-role">Função</label><input id="profile-role" type="text" maxlength="80" placeholder="Opcional"><label for="profile-location">Localidade</label><input id="profile-location" type="text" autocomplete="address-level2" maxlength="80" placeholder="Opcional"><p id="profile-data-message" class="profile-data-message" role="status" hidden></p><div class="profile-form-actions"><button type="button" id="profile-cancel">Cancelar</button><button type="submit">Guardar alterações</button></div></form></div><div class="detail-placeholder"><span>✦</span><div><strong>Estamos a preparar esta área</strong><p>Em breve terás novidades por aqui.</p></div></div><button id="logout" type="button" class="logout-button" hidden>Terminar sessão</button></section>
+    </main>
+    <nav class="bottom-nav" aria-label="Navegação principal"><div class="nav-inner">
+      <button type="button" class="nav-item" data-route="hours"><svg><use href="#i-clock"/></svg><span>Horas</span></button>
+      <button type="button" class="nav-item" data-route="messages"><svg><use href="#i-message"/></svg><span>Mensagens</span></button>
+      <button type="button" class="nav-item nav-home active" data-route="home" aria-current="page"><span class="home-circle"><svg><use href="#i-home"/></svg></span><span>Início</span></button>
+      <button type="button" class="nav-item" data-route="profile"><svg><use href="#i-user"/></svg><span>Perfil</span></button>
+      <button type="button" class="nav-item" data-open-customize><svg><use href="#i-sliders"/></svg><span>Ajustar</span></button>
+    </div></nav>
+  </div>
+  <dialog id="welcome-dialog" class="app-dialog welcome-dialog"><div class="dialog-mark"><img src="logo.svg" alt=""></div><p class="overline">BEM-VINDO À HOURTOYOU</p><h2>Este espaço é teu<span class="teal-dot">.</span></h2><p>Olá, <span data-user-first></span>! Estamos felizes por te ter aqui. Vamos tornar a gestão do teu tempo mais simples.</p><button type="button" class="dialog-primary" id="welcome-continue">Vamos começar <span>↗</span></button></dialog>
+  <dialog id="customize-dialog" class="app-dialog customize-dialog"><div class="dialog-heading"><div><p class="overline">AO TEU GOSTO</p><h2>Personalizar cartões<span class="teal-dot">.</span></h2></div><button type="button" class="close-dialog" aria-label="Fechar personalização">×</button></div><p>Escolhe os cartões e a ordem em que aparecem no início.</p><div id="customize-list" class="customize-list"></div><button type="button" class="dialog-primary" id="customize-done">Concluído <span>✓</span></button></dialog>
+  <dialog id="undo-dialog" class="app-dialog undo-dialog"><p class="overline">CONFIRMAR ALTERAÇÃO</p><h2>Anular o último registo?</h2><p id="undo-description"></p><div class="undo-dialog-actions"><button type="button" id="undo-cancel">Cancelar</button><button type="button" id="undo-confirm">Anular registo</button></div></dialog>
+  <dialog id="salary-dialog" class="app-dialog work-dialog"><div class="dialog-heading"><div><p class="overline">O TEU ORDENADO</p><h2>O valor do teu tempo<span class="teal-dot">.</span></h2></div><button type="button" class="work-close" data-close="salary-dialog" aria-label="Fechar">×</button></div><p>Indica o teu ordenado líquido mensal para calcular uma referência por dia e por hora.</p><form id="salary-form"><label for="salary-input">Ordenado líquido mensal (€)</label><input id="salary-input" type="text" inputmode="decimal" placeholder="Ex.: 1 200,00" required><div id="salary-result" class="salary-result" hidden><div><span>POR DIA · 22 DIAS</span><strong id="salary-day"></strong></div><div><span>POR HORA · 8 HORAS</span><strong id="salary-hour"></strong></div><small>Ordenado ÷ 22 dias ÷ 8 horas</small></div><p id="salary-error" class="form-error" role="alert" hidden></p><button class="dialog-primary" type="submit">Guardar ordenado <span>↗</span></button></form></dialog>
+  <dialog id="extra-dialog" class="app-dialog work-dialog"><div class="dialog-heading"><div><p class="overline">HORAS EXTRA</p><h2>Novo registo<span class="teal-dot">.</span></h2></div><button type="button" class="work-close" data-close="extra-dialog" aria-label="Fechar">×</button></div><p>Indica a duração e a percentagem. Por exemplo, um acréscimo de 50% corresponde a 150% da hora normal.</p><form id="extra-form"><div class="form-grid"><div><label for="extra-date">Data</label><input type="date" id="extra-date" required></div><div><label for="extra-hours">Horas</label><input type="text" id="extra-hours" inputmode="decimal" placeholder="Ex.: 1,5" required></div></div><label for="extra-rate">Percentagem (%)</label><input type="text" id="extra-rate" inputmode="decimal" list="rate-presets" placeholder="Ex.: 50" required><datalist id="rate-presets"><option value="50"><option value="100"><option value="200"><option value="300"></datalist><label for="extra-mode">Aplicar percentagem como</label><select id="extra-mode"><option value="bonus">Acréscimo à hora normal</option><option value="total">Percentagem como valor total</option></select><div class="estimate-box"><span>ESTIMATIVA DO REGISTO</span><strong id="extra-estimate">—</strong><small id="extra-explain">Define primeiro o ordenado.</small></div><p id="extra-error" class="form-error" role="alert" hidden></p><button type="submit" class="dialog-primary">Guardar horas extra <span>↗</span></button></form></dialog>
+  <dialog id="import-dialog" class="app-dialog work-dialog import-dialog"><div class="dialog-heading"><div><p class="overline">HORÁRIO E PERCURSOS</p><h2>Adicionar horário<span class="teal-dot">.</span></h2></div><button type="button" class="work-close" data-close="import-dialog" aria-label="Fechar">×</button></div><p>Seleciona um ficheiro ou cola o texto. Confirma os períodos detetados antes de guardar.</p><label for="schedule-file">Ficheiro PDF, Word (.docx) ou texto (.txt)</label><input id="schedule-file" type="file" accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"><label for="schedule-text">Texto do horário</label><textarea id="schedule-text" rows="5" placeholder="Cola aqui o horário e os percursos, ou seleciona um ficheiro."></textarea><div class="import-actions"><button type="button" id="analyze-schedule" class="outline-button">Analisar texto</button><button type="button" id="add-schedule-row" class="outline-button">＋ Adicionar período</button></div><p id="import-status" class="work-hint" role="status"></p><div id="schedule-rows" class="schedule-rows"></div><p id="import-error" class="form-error" role="alert" hidden></p><button type="button" id="save-schedule" class="dialog-primary">Guardar períodos revistos <span>↗</span></button></dialog>
+  <dialog id="report-dialog" class="app-dialog work-dialog report-dialog"><div class="dialog-heading"><div><p class="overline">RELATÓRIO DO CONDUTOR</p><h2>Exportar horas<span class="teal-dot">.</span></h2></div><button type="button" class="work-close" data-close="report-dialog" id="report-close" aria-label="Fechar">×</button></div><p>Prepara um relatório para guardar ou entregar à empresa.</p><label for="report-name">Nome do condutor</label><input id="report-name" type="text" maxlength="120" placeholder="Nome completo"><label for="report-title">Título do relatório</label><input id="report-title" type="text" maxlength="60" value="Relatório de horas"><label for="report-theme">Cor do relatório</label><select id="report-theme"><option value="ocean">Azul Açores</option><option value="teal">Verde oceano</option><option value="slate">Cinza elegante</option></select><label class="include-demo report-option"><input type="checkbox" id="report-money" checked> Incluir valores estimados</label><label class="include-demo report-option"><input type="checkbox" id="report-details" checked> Incluir detalhe dos períodos</label><div class="form-grid"><div><label for="report-from">De (opcional)</label><input id="report-from" type="date"></div><div><label for="report-to">Até (opcional)</label><input id="report-to" type="date"></div></div><label id="include-demo-label" class="include-demo" hidden><input type="checkbox" id="include-demo"> Incluir as 6 horas de exemplo do administrador</label><p class="work-hint">Sem datas, o relatório inclui todos os registos. As horas extra são apresentadas separadamente para evitar contagem dupla.</p><div class="export-buttons"><button type="button" data-export="pdf">PDF <span>↓</span></button><button type="button" data-export="xlsx">Excel <span>↓</span></button><button type="button" data-export="docx">Word <span>↓</span></button></div><p id="report-error" class="form-error" role="alert" hidden></p></dialog>
+  <dialog id="chat-image-dialog" class="chat-image-dialog"><button type="button" id="chat-image-close" aria-label="Fechar fotografia">×</button><img id="chat-image-large" alt="Fotografia partilhada na conversa"></dialog>
+  <dialog id="help-dialog" class="app-dialog work-dialog help-dialog"><div class="dialog-heading"><div><p class="overline">MENSAGEM DE AJUDA</p><h2>Pedir ajuda<span class="teal-dot">.</span></h2></div><button type="button" class="help-close" id="help-close" aria-label="Fechar">×</button></div><p>Envia uma mensagem à pessoa desta conversa. Podes rever o texto antes de enviar.</p><p class="help-warning">Esta demonstração só guarda a mensagem neste navegador. Não envia alertas a outros dispositivos nem aciona serviços de emergência.</p><label for="help-text">Mensagem</label><textarea id="help-text" rows="5" maxlength="2000"></textarea><p id="help-feedback" class="form-error" role="alert" hidden></p><button type="button" id="help-send" class="dialog-primary">Guardar pedido na conversa <span>↗</span></button></dialog>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
